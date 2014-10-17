@@ -36,6 +36,7 @@ Companies that implemented one or more BMC Remedy ITSM processes store a signifi
 * Can be natively used by Phython, PHP, Java, Shell Scripts, C#, C++ and many more
 
 *VIPCON AR Restful API* supports a variety of use cases like:
+
 * SmartIT & MyIT customization & extension
 * Mobil Application integration
 * Monitoring CMDB integration 
