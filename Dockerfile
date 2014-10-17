@@ -15,11 +15,13 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
     wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - && \
     tar zxf apache-tomcat-*.tar.gz && \
     rm apache-tomcat-*.tar.gz && \
-    mv apache-tomcat* tomcat && rm -rf /tomcat/webapps/ROOT/*
+    mv apache-tomcat* tomcat && \
+    rm -rf /tomcat/webapps/ROOT/* && \
+    rm -rf /tomcat/webapps/docs
 
 ADD arapi-0.14.5.war /tomcat/webapps/
 RUN mv /tomcat/webapps/arapi-0.14.5.war /tomcat/webapps/arapi.war
-ADD docs-0.14.5.tar.gz /tomcat/webapps/docs
+ADD docs-0.14.5.tar.gz /tomcat/webapps/
 ADD index.jsp /tomcat/webapps/ROOT/
 ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
 ADD run.sh /run.sh
