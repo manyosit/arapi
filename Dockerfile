@@ -19,9 +19,9 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
     rm -rf /tomcat/webapps/ROOT/* && \
     rm -rf /tomcat/webapps/docs
 
-ADD arapi-0.14.5.war /tomcat/webapps/
-RUN mv /tomcat/webapps/arapi-0.14.5.war /tomcat/webapps/arapi.war
-ADD docs-0.14.5.tar.gz /tomcat/webapps/
+ADD arapi-0.14.6.war /tomcat/webapps/
+RUN mv /tomcat/webapps/arapi-0.14.6.war /tomcat/webapps/arapi.war
+ADD docs-0.14.6.tar.gz /tomcat/webapps/
 ADD index.jsp /tomcat/webapps/ROOT/
 ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
 ADD run.sh /run.sh
@@ -29,4 +29,3 @@ RUN chmod +x /*.sh
 
 EXPOSE 8080
 CMD ["/run.sh"]
-#CMD ["/bin/bash"]
