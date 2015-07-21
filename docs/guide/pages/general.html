@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.1 General Options 0.14.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/operations.html"><strong>3</strong><span>API Operations</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>arapi</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.1 General Options - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Robert Hannemann</p>
+
+                    <p><strong>Version:</strong> 0.14.7</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="general">3.1 General Options</h2>
+<h3>Server Port</h3><p class="paragraph"/>If your AR System Server requires a dedicated server port instead of the portmapper (0) the optional parameter port can be used to address the specific AR Server Port.<p class="paragraph"/>e.g. 
+<div class="code"><pre>http://tomcat/arapi/arserver/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?port=12345</pre></div><p class="paragraph"/>Available since version 0.4<p class="paragraph"/><h3>Authentication</h3><p class="paragraph"/>Authentication is done by HTTP Basic Authentication. User Name and Password entered in the application are passed to the AR System Server. <strong class="bold">Please make sure to use HTTPS / SSL encryption.</strong> Otherwise your Remedy Username/Password will be sent over the network in plain text.<p class="paragraph"/>The authentication realm is "myRealm".<p class="paragraph"/><h3>Field Definition Cache (FieldIDs / FieldNames) </h3><p class="paragraph"/>The field and schema information like field names &#38; field ids are cached for better performance. The field cache is valid for 10 minutes and will be automatically refreshed after this time. The Field cache is server and user specific. This is important if AR RESTful API is used by different users with different permissions or on different servers with different permissions for the same user.
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

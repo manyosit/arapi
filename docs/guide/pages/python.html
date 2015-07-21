@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.1 Python CMDB Access 0.14.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/operations.html"><strong>3</strong><span>API Operations</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>arapi</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/operations.html">&lt;&lt; <strong>3</strong><span>API Operations</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>4.1 Python CMDB Access - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Robert Hannemann</p>
+
+                    <p><strong>Version:</strong> 0.14.7</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="python">4.1 Python CMDB Access</h2>
+The following Python code queries the CMDB AST:ComputerSystem with the query: 'Name' LIKE "%.manyos.de" AND 'Data Set Id' = "BMC.ASSET". For each CI the name an the Reconciliation ID are printed. Each CI will be checked for Dependency Relation. For each relation ClassID of the relation and the ClassID of the Destination Class are printed. 
+The Sample contains also the necessary methods for user authentication and illustrates how easy it is to access data via the API.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> json
+ from pprint <span class="java&#45;keyword">import</span> pprint
+ <span class="java&#45;keyword">import</span> urllib2<p class="paragraph"/> def printme(str_name, str_reconid ):
+    <span class="java&#45;quote">"This prints a passed string into <span class="java&#45;keyword">this</span> function"</span>
+    print str_name + <span class="java&#45;quote">" "</span> + str_reconid
+    getRelations(str_reconid)
+    <span class="java&#45;keyword">return</span><p class="paragraph"/> def getRelations(str_reconid):
+     json_data = urllib2.urlopen(<span class="java&#45;quote">"http://tomcat/arapi/arserver/BMC.CORE:BMC_Dependency/'Source.ReconciliationIdentity'=%22"</span> + str_reconid + <span class="java&#45;quote">"%22"</span>)
+     mydata = json.load(json_data)
+     &#35;pprint (mydata)
+     <span class="java&#45;keyword">for</span> myRelation in mydata:
+         print(mydata&#91;myRelation&#93;&#91;<span class="java&#45;quote">"ClassId"</span>&#93; + <span class="java&#45;quote">" &#45;&#62; "</span> + mydata&#91;myRelation&#93;&#91;<span class="java&#45;quote">"Destination.ClassId"</span>&#93;)
+     <span class="java&#45;keyword">return</span><p class="paragraph"/> username = <span class="java&#45;quote">"Demo"</span>
+ password = <span class="java&#45;quote">"12345"</span><p class="paragraph"/> &#35; create a password manager
+ password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()<p class="paragraph"/> &#35; Add the username and password.
+ &#35; If we knew the realm, we could use it instead of None.
+ top_level_url = <span class="java&#45;quote">"http://muc&#45;vip&#45;srvw084.intern.manyos.de:8080/arapi"</span>
+ password_mgr.add_password('myRealm', top_level_url, username, password)<p class="paragraph"/> handler = urllib2.HTTPBasicAuthHandler(password_mgr)<p class="paragraph"/> &#35; create <span class="java&#45;quote">"opener"</span> (OpenerDirector instance)
+ opener = urllib2.build_opener(handler)<p class="paragraph"/> &#35; use the opener to fetch a URL
+ opener.open(top_level_url)<p class="paragraph"/> &#35; Install the opener.
+ &#35; Now all calls to urllib2.urlopen use our opener.
+ urllib2.install_opener(opener)<p class="paragraph"/> &#35; use the opener to fetch a URL
+ json_data = urllib2.urlopen(<span class="java&#45;quote">"http://tomcat"</span> + urllib2.quote(<span class="java&#45;quote">"/arapi/arserver/AST:ComputerSystem/'Name' LIKE &#65533;%.vipcon.com&#65533; AND 'Data Set Id' = &#34;BMC.ASSET&#34;"</span>))<p class="paragraph"/> data = json.load(json_data)<p class="paragraph"/> <span class="java&#45;keyword">for</span> o in data:
+ 	printme(data&#91;o&#93;&#91;<span class="java&#45;quote">"Name"</span>&#93;, data&#91;o&#93;&#91;<span class="java&#45;quote">"Reconciliation Identity"</span>&#93;)<p class="paragraph"/> json_data.close()</pre></div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/operations.html">&lt;&lt; <strong>3</strong><span>API Operations</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

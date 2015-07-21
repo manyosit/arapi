@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 API Operations 0.14.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/operations.html"><strong>3</strong><span>API Operations</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>arapi</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 API Operations - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Robert Hannemann</p>
+
+                    <p><strong>Version:</strong> 0.14.7</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#general"><strong>3.1</strong><span>General Options</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#GET"><strong>3.2</strong><span>Query Data</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#POST"><strong>3.3</strong><span>Create Data</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#PUT"><strong>3.4</strong><span>Update Data</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#DELETE"><strong>3.5</strong><span>Delete Data</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="operations">3 API Operations</h1>
+All REST operations and general settings are described here.
+
+
+<h2 id="general">3.1 General Options</h2>
+<h3>Server Port</h3><p class="paragraph"/>If your AR System Server requires a dedicated server port instead of the portmapper (0) the optional parameter port can be used to address the specific AR Server Port.<p class="paragraph"/>e.g. 
+<div class="code"><pre>http://tomcat/arapi/arserver/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?port=12345</pre></div><p class="paragraph"/>Available since version 0.4<p class="paragraph"/><h3>Authentication</h3><p class="paragraph"/>Authentication is done by HTTP Basic Authentication. User Name and Password entered in the application are passed to the AR System Server. <strong class="bold">Please make sure to use HTTPS / SSL encryption.</strong> Otherwise your Remedy Username/Password will be sent over the network in plain text.<p class="paragraph"/>The authentication realm is "myRealm".<p class="paragraph"/><h3>Field Definition Cache (FieldIDs / FieldNames) </h3><p class="paragraph"/>The field and schema information like field names &#38; field ids are cached for better performance. The field cache is valid for 10 minutes and will be automatically refreshed after this time. The Field cache is server and user specific. This is important if AR RESTful API is used by different users with different permissions or on different servers with different permissions for the same user.
+
+
+<h2 id="GET">3.2 Query Data</h2>
+<h3>Optional Parameters / General handling </h3><p class="paragraph"/>The following optional parameters can be used to change the behavior of the GET operation.<p class="paragraph"/><h4>Field IDs</h4><p class="paragraph"/>By default the application returns field names. If required the parameter  <em class="italic">fieldNames=false</em>  can be provided in URL to return field ids instead. 
+e.g. 
+<div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?fieldNames=<span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/>For all  <em class="italic">POST / PUT</em>  operations you can address fields by name or id.<p class="paragraph"/><h4>Selection Fields</h4><p class="paragraph"/>By default the application returns the character presentation for all Selection Fields. E.g. The value  <em class="italic">Deployed</em>  for the field  <em class="italic">AssetLifecylcleStatus</em>  will be returned instead of its internal numerical value  <em class="italic">3</em> . With the optional parameter  <em class="italic">translateSelectionFields=false</em>  this can be changed to return  <em class="italic">3</em>  instead.<p class="paragraph"/>e.g. 
+<div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?translateSelectionFields=<span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/><h4>Chunking</h4><p class="paragraph"/>Chunking allows you to receive a large amount of records in small chunks. e.g. you want to receive all records in chunks with 1000 records each. The first query will set the parameter firstEntry to 0 and the parameter maxEntries to 1000. This will return records 1 - 1000. The second query will set the parameter firstEntry to 1000 and the parameter maxEntries to 1000. This will return the records 1001 - 2000.<p class="paragraph"/>Two optional parameters are available:<p class="paragraph"/>firstEntry: The first entry to return. Defaults to 0
+maxEntries: The number of entries to return with this chunk. Defaults to 0 (all)<p class="paragraph"/>Samples<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?firstEntry=1000&#38;maxEntries=1000</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?firstEntry=140</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?maxEntries=10</pre></div><p class="paragraph"/><h4>Attachment Fields</h4><p class="paragraph"/>If an attachment is stored in the current record it will not be returned with the query operation. Instead a reference to the attachment will be provided. With a get operation on this reference the attachment can be received.<p class="paragraph"/>e.g.<p class="paragraph"/>Sample Query Response:<p class="paragraph"/><div class="code"><pre><span class="java&#45;quote">"Attachment Field"</span>:&#123;
+	<span class="java&#45;quote">"Name"</span>:<span class="java&#45;quote">"20140127_Existing_Records.xlsx"</span>,
+	<span class="java&#45;quote">"URL"</span>:<span class="java&#45;quote">"http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/getAttachment/000000000000101/536870915"</span>
+&#125;</pre></div><p class="paragraph"/>The attachment can be received via a GET operation at the following URL:<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/getAttachment/000000000000101/536870915</pre></div><p class="paragraph"/><h4>Count results only</h4><p class="paragraph"/>A optional parameter countOnly is available to only return the number of records found by a query. Possible values are true, false. Default value is false.<p class="paragraph"/>Sample Response:
+<div class="code"><pre>&#123;
+  <span class="java&#45;quote">"form"</span>: <span class="java&#45;quote">"BMC.CORE:BMC_BaseElement"</span>,
+  <span class="java&#45;quote">"query"</span>: <span class="java&#45;quote">"'DatasetId' = &#34;BMC.ASSET&#34; AND 'ClassId' != &#34;BMC_BUSINESSSERVICE&#34; AND 'AssetLifecycleStatus' = &#34;Deployed&#34;AND'ClassId'!=&#34;BMC_PERSON&#34;"</span>,
+  <span class="java&#45;quote">"resultSize"</span>: 20602
+&#125;</pre></div><p class="paragraph"/><h3>Get all Forms</h3><p class="paragraph"/>Returns all forms on the Server as JSON<p class="paragraph"/>Request Format<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/><div class="code"><pre>http://tomcat/arapi/arserver/</pre></div><p class="paragraph"/>Sample Response:<p class="paragraph"/><div class="code"><pre>&#91;
+	<span class="java&#45;quote">"AAS:Activity"</span>,
+	<span class="java&#45;quote">"AAS:ActivityInterface"</span>,
+	<span class="java&#45;quote">"AAS:ActivityInterface_Create"</span>,
+	<span class="java&#45;quote">"AAS:ActivityTaskJoin"</span>,
+	<span class="java&#45;quote">"AAS:AuditFilters"</span>,
+	<span class="java&#45;quote">"AAS:AuditLog"</span>,
+	<span class="java&#45;quote">"AAS:AuditLogSystem"</span>,
+	<span class="java&#45;quote">"AAS:CFG Notification Rules"</span>,
+	<span class="java&#45;quote">"AAS:CFG Rules"</span>,
+	&#8230;
+&#93;</pre></div><p class="paragraph"/><h3>Get all fields from a form</h3><p class="paragraph"/>Returns all fields with fieldid and fieldname from the Form as JSON<p class="paragraph"/>Request Format<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/><div class="code"><pre>http://tomcat/arapi/arserver/ARAPI:test</pre></div><p class="paragraph"/>Sample Response:<p class="paragraph"/><div class="code"><pre>&#123;
+   <span class="java&#45;quote">"1"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:1,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Request&#45;ID"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"2"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:2,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Submitter"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"3"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:3,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Create Date"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DateTimeField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"4"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:4,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Zugewiesen an"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"5"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:5,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Last modified by"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"6"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:6,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Modified Date"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DateTimeField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"7"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:7,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Status"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"SelectionField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:&#123;
+         <span class="java&#45;quote">"0"</span>:<span class="java&#45;quote">"Neu"</span>,
+         <span class="java&#45;quote">"1"</span>:<span class="java&#45;quote">"Zugewiesen"</span>,
+         <span class="java&#45;quote">"2"</span>:<span class="java&#45;quote">"Behoben"</span>,
+         <span class="java&#45;quote">"3"</span>:<span class="java&#45;quote">"Zurueckgewiesen"</span>,
+         <span class="java&#45;quote">"4"</span>:<span class="java&#45;quote">"Abgeschlossen"</span>
+      &#125;
+   &#125;,
+   <span class="java&#45;quote">"8"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:8,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"15"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:15,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Statusverlauf"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870913"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870913,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"IntegerField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870914"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870914,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Attachment Pool"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"AttachmentPoolField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870915"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870915,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Attachment Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"AttachmentField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870916"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870916,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Selection Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"SelectionField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:&#123;
+         <span class="java&#45;quote">"0"</span>:<span class="java&#45;quote">"Default 1"</span>,
+         <span class="java&#45;quote">"100"</span>:<span class="java&#45;quote">"value"</span>
+      &#125;
+   &#125;,
+   <span class="java&#45;quote">"536870917"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870917,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Diary Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DiaryField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870919"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870919,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Date Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DateOnlyField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870920"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870920,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Time Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"TimeOnlyField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870921"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870921,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Currency Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CurrencyField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870922"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870922,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Real Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"RealField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870923"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870923,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Decimal Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DecimalField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870924"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870924,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"Date/time Fiel"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"DateTimeField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;,
+   <span class="java&#45;quote">"536870925"</span>:&#123;
+      <span class="java&#45;quote">"fieldId"</span>:536870925,
+      <span class="java&#45;quote">"name"</span>:<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>,
+      <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
+      <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
+   &#125;
+&#125;</pre></div><p class="paragraph"/><h3>Query Data</h3><p class="paragraph"/>To access data you need to provide a URL in the following format:<p class="paragraph"/>Request Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/&#60;query&#62;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/><div class="code"><pre>http://tomcat/arapi/arserver/ARAPI:test/'1' LIKE <span class="java&#45;quote">"00000000000010%"</span></pre></div><p class="paragraph"/>Sample Response:<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"000000000000101"</span>:&#123;
+		<span class="java&#45;quote">"Attachment Field"</span>:&#123;
+			<span class="java&#45;quote">"Name"</span>:<span class="java&#45;quote">"20140127_Existing_Records.xlsx"</span>,
+			<span class="java&#45;quote">"URL"</span>:<span class="java&#45;quote">"http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/getAttachment/000000000000101/536870915"</span>
+		&#125;,
+		<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>:<span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Create Date"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>,
+		<span class="java&#45;quote">"Currency Field"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"Date Field"</span>:<span class="java&#45;quote">"01.06.2014"</span>,
+		<span class="java&#45;quote">"Date/time Fiel"</span>:<span class="java&#45;quote">"Sun Jun 01 01:56:02 CEST 2014"</span>,
+		<span class="java&#45;quote">"Decimal Field"</span>:197,
+		<span class="java&#45;quote">"Diary Field"</span>:&#91;
+			&#123;
+			<span class="java&#45;quote">"createDate"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>,
+			<span class="java&#45;quote">"text"</span>:<span class="java&#45;quote">"New Entry"</span>,
+			<span class="java&#45;quote">"user"</span>:<span class="java&#45;quote">"rhannemann"</span>
+			&#125;
+		&#93;,
+		<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>:9,
+		<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>:<span class="java&#45;quote">"New Shorty"</span>,
+		<span class="java&#45;quote">"Real Field"</span>:63332.556,
+		<span class="java&#45;quote">"Request&#45;ID"</span>:<span class="java&#45;quote">"000000000000101"</span>,
+		<span class="java&#45;quote">"Selection Field"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"Status"</span>:<span class="java&#45;quote">"Behoben"</span>,
+		<span class="java&#45;quote">"Statusverlauf"</span>:<span class="java&#45;quote">"1396335616&#117;0004rhannemann&#117;0003&#117;00031396335616&#117;0004rhannemann&#117;0003"</span>,
+		<span class="java&#45;quote">"Submitter"</span>:<span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Time Field"</span>:<span class="java&#45;quote">"19:00:00"</span>,
+		<span class="java&#45;quote">"Zugewiesen an"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"Last modified by"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Modified Date"</span>:<span class="java&#45;quote">"Tue Apr 01 16:49:14 CEST 2014"</span>
+	&#125;, <span class="java&#45;quote">"000000000000109"</span>:&#123;
+		<span class="java&#45;quote">"Attachment Field"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>:<span class="java&#45;quote">"rohase"</span>,
+		<span class="java&#45;quote">"Create Date"</span>:<span class="java&#45;quote">"Tue Apr 01 15:10:56 CEST 2014"</span>,
+		<span class="java&#45;quote">"Currency Field"</span>:&#123;
+			<span class="java&#45;quote">"conversionDate"</span>:<span class="java&#45;quote">"Tue Apr 01 11:10:35 CEST 2014"</span>,
+			<span class="java&#45;quote">"currencyCode"</span>:<span class="java&#45;quote">"USD"</span>,
+			<span class="java&#45;quote">"value"</span>:5299.84
+		&#125;,
+		<span class="java&#45;quote">"Date Field"</span>:<span class="java&#45;quote">"01.06.2014"</span>,
+		<span class="java&#45;quote">"Date/time Fiel"</span>:<span class="java&#45;quote">"Mon Jun 02 01:56:02 CEST 2014"</span>,
+		<span class="java&#45;quote">"Decimal Field"</span>:197,
+		<span class="java&#45;quote">"Diary Field"</span>:&#91;
+			&#123;
+				<span class="java&#45;quote">"createDate"</span>:<span class="java&#45;quote">"Tue Apr 01 15:10:56 CEST 2014"</span>,
+				<span class="java&#45;quote">"text"</span>:<span class="java&#45;quote">"New Entry"</span>,
+				<span class="java&#45;quote">"user"</span>:<span class="java&#45;quote">"rhannemann"</span>
+			&#125;
+			&#93;,
+		<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>:9,
+		<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>:<span class="java&#45;quote">"New Update"</span>,
+		<span class="java&#45;quote">"Real Field"</span>:63332.556,
+		<span class="java&#45;quote">"Request&#45;ID"</span>:<span class="java&#45;quote">"000000000000109"</span>,
+		<span class="java&#45;quote">"Selection Field"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"Status"</span>:<span class="java&#45;quote">"Behoben"</span>,
+		<span class="java&#45;quote">"Statusverlauf"</span>:<span class="java&#45;quote">"1396357856&#117;0004rhannemann&#117;0003&#117;00031396357856&#117;0004rhannemann&#117;0003"</span>,
+		<span class="java&#45;quote">"Submitter"</span>:<span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Time Field"</span>:<span class="java&#45;quote">"19:00:00"</span>,
+		<span class="java&#45;quote">"Zugewiesen an"</span>:<span class="java&#45;keyword">null</span>,
+		<span class="java&#45;quote">"Last modified by"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Modified Date"</span>:<span class="java&#45;quote">"Tue Apr 01 15:10:56 CEST 2014"</span>
+	&#125;
+&#125;</pre></div>
+
+
+<h2 id="POST">3.3 Create Data</h2>
+Data can be create via a POST Request<p class="paragraph"/>Use the URL as follows<p class="paragraph"/>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;<p class="paragraph"/>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/<p class="paragraph"/>The data itself needs to be provided as JSON in the following format<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;myReference&#62;"</span>: &#123;
+		<span class="java&#45;quote">"&#60;fieldid&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>,
+		<span class="java&#45;quote">"&#60;fieldname&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>The response will return a JSON with the original reference and the created ar system request id<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;myReference&#62;"</span>: <span class="java&#45;quote">"&#60;arentryid&#62;"</span>
+&#125;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/>Sample Request<p class="paragraph"/><div class="code"><pre>&#123;
+    <span class="java&#45;quote">"myID_00000000102"</span>: &#123;
+		<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>: <span class="java&#45;quote">"New Update Record"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>: <span class="java&#45;quote">"rohase"</span>,
+		<span class="java&#45;quote">"Decimal Field"</span>: 1.97,
+		<span class="java&#45;quote">"Real Field"</span>: 63332.556,
+		<span class="java&#45;quote">"Time Field"</span>: <span class="java&#45;quote">"19:00:00"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>: 9,
+		<span class="java&#45;quote">"Diary Field"</span>: <span class="java&#45;quote">"New Entry"</span>,
+		7: <span class="java&#45;quote">"Resolved"</span>,
+		<span class="java&#45;quote">"Date Field"</span>: <span class="java&#45;quote">"01.06.2014"</span>,
+		<span class="java&#45;quote">"Submitter"</span>: <span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Date/time Fiel"</span>: <span class="java&#45;quote">"Sun Jun 02 01:56:02 CEST 2014"</span>,
+		<span class="java&#45;quote">"Currency Field"</span>: &#123;
+			<span class="java&#45;quote">"conversionDate"</span>: <span class="java&#45;quote">"Tue Apr 01 11:10:35 CEST 2014"</span>,
+			<span class="java&#45;quote">"currencyCode"</span>: <span class="java&#45;quote">"USD"</span>,
+			<span class="java&#45;quote">"value"</span>: 5299.82
+		&#125;
+    &#125;,
+    <span class="java&#45;quote">"myRequestNumber14"</span>: &#123;
+		<span class="java&#45;quote">"Status"</span>: 0,
+		<span class="java&#45;quote">"8"</span>: <span class="java&#45;quote">"Shorty"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>Sample Response<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"myID_00000000102"</span>: <span class="java&#45;quote">"000000000000028"</span>,
+	<span class="java&#45;quote">"myRequestNumber14"</span>: <span class="java&#45;quote">"000000000000031"</span>
+&#125;</pre></div><p class="paragraph"/><h3>Attachments</h3><p class="paragraph"/>Attachments can be set or update via a multipart/form-data POST request to a specific URL.<p class="paragraph"/>URL Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/setAttachment/&#60;entryID&#62;/&#60;attachmentFieldID&#62;</pre></div>
+<ul class="star">
+<li> <em class="italic">&#60;entryID&#62;</em>  : The ID of entry / record where the attachment needs to be set / updated</li>
+<li> <em class="italic">&#60;attachmentFieldID&#62;</em>  : The Field ID of attachment field that needs to be set / updated</li>
+</ul><p class="paragraph"/>The filename needs to be provided as value for the  <em class="italic">name</em>  attribute.<p class="paragraph"/>Sample URL:<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/setAttachment/000000000000101/536870915</pre></div>
+
+
+<h2 id="PUT">3.4 Update Data</h2>
+Data can be updated via a PUT Request<p class="paragraph"/>Use the URL as follows<p class="paragraph"/>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;<p class="paragraph"/>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/<p class="paragraph"/>The data itself needs to be provided as JSON in the following format<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;requestid&#62;"</span>: &#123;
+		<span class="java&#45;quote">"&#60;fieldid&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>,
+		<span class="java&#45;quote">"&#60;fieldname&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>The response will be in JSON and will return "success" or an error for each request<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;requestid&#62;"</span>: <span class="java&#45;quote">"success"</span>
+&#125;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/>Sample Request<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"000000000000028"</span>: &#123;
+		<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>: <span class="java&#45;quote">"New Update Record"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>: <span class="java&#45;quote">"rohase"</span>,
+		<span class="java&#45;quote">"Decimal Field"</span>: 1.97,
+		<span class="java&#45;quote">"Real Field"</span>: 63332.556,
+		<span class="java&#45;quote">"Time Field"</span>: <span class="java&#45;quote">"19:00:00"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>: 9,
+		<span class="java&#45;quote">"Diary Field"</span>: <span class="java&#45;quote">"New Entry"</span>,
+		7: <span class="java&#45;quote">"Resolved"</span>,
+		<span class="java&#45;quote">"Date Field"</span>: <span class="java&#45;quote">"01.06.2014"</span>,
+		<span class="java&#45;quote">"Submitter"</span>: <span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Date/time Fiel"</span>: <span class="java&#45;quote">"Sun Jun 02 01:56:02 CEST 2014"</span>,
+		<span class="java&#45;quote">"Currency Field"</span>: &#123;
+			<span class="java&#45;quote">"conversionDate"</span>: <span class="java&#45;quote">"Tue Apr 01 11:10:35 CEST 2014"</span>,
+			<span class="java&#45;quote">"currencyCode"</span>: <span class="java&#45;quote">"USD"</span>,
+			<span class="java&#45;quote">"value"</span>: 5299.82
+		&#125;
+    &#125;, <span class="java&#45;quote">"000000000000028"</span>: &#123;
+		<span class="java&#45;quote">"7"</span>: <span class="java&#45;quote">"New"</span>,
+		<span class="java&#45;quote">"8"</span>: <span class="java&#45;quote">"Moin"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>Sample Response<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"000000000000028"</span>: <span class="java&#45;quote">"success"</span>,
+	<span class="java&#45;quote">"000000000000031"</span>: <span class="java&#45;quote">"success"</span>
+&#125;</pre></div><p class="paragraph"/><h3>Attachments</h3><p class="paragraph"/>Attachments can be set or update via a multipart/form-data POST request to a specific URL.<p class="paragraph"/>URL Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/setAttachment/&#60;entryID&#62;/&#60;attachmentFieldID&#62;</pre></div>
+<ul class="star">
+<li> <em class="italic">&#60;entryID&#62;</em>  : The ID of entry / record where the attachment needs to be set / updated</li>
+<li> <em class="italic">&#60;attachmentFieldID&#62;</em>  : The Field ID of attachment field that needs to be set / updated</li>
+</ul><p class="paragraph"/>The filename needs to be provided as value for the  <em class="italic">name</em>  attribute.<p class="paragraph"/>Sample URL:<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/setAttachment/000000000000101/536870915</pre></div>
+
+
+<h2 id="DELETE">3.5 Delete Data</h2>
+The DELETE operation deletes records based on a provided query.<p class="paragraph"/>
+Please keep in mind: The DELETE operation is not used much in Remedy / ITSM. Instead records are often only flagged as deleted (most often for audit / compliance). Also the delete operation might only work if your user has  <em class="italic">Administrator</em>  privileges.<p class="paragraph"/>Request Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/&#60;query&#62;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/><div class="code"><pre>http://tomcat/arapi/arserver/ARAPI:test/'1' &#62; <span class="java&#45;quote">"00000000000060%"</span></pre></div><p class="paragraph"/>Sample Response<p class="paragraph"/><div class="code"><pre>&#123;
+    <span class="java&#45;quote">"000000000000601"</span>: <span class="java&#45;quote">"success"</span>,
+    <span class="java&#45;quote">"000000000000602"</span>: <span class="java&#45;quote">"success"</span>,
+    <span class="java&#45;quote">"000000000000603"</span>: <span class="java&#45;quote">"success"</span>
+&#125;</pre></div><p class="paragraph"/><h4>Optional Chunking</h4><p class="paragraph"/>Chunking allows you to delete a large amount of records in small chunks. e.g. you want to delete all records in chunks with 1000 records each. The first query will set the parameter firstEntry to 0 and the parameter maxEntries to 1000. This will delete records 1 - 1000. The second query will set the parameter firstEntry to 1000 and the parameter maxEntries to 1000. This will delete the records 1001 - 2000.<p class="paragraph"/>Two optional parameters are available:<p class="paragraph"/>firstEntry: The first entry to delete. Defaults to 0
+maxEntries: The number of entries to delete with this chunk. Defaults to 0 (all)<p class="paragraph"/>Samples<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/ARAPI:test/'1' LIKE <span class="java&#45;quote">"00000000000060%"</span>?firstEntry=1000&#38;maxEntries=1000</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/ARAPI:test/'1' LIKE <span class="java&#45;quote">"00000000000060%"</span>?firstEntry=140</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/ARAPI:test/'1' LIKE <span class="java&#45;quote">"00000000000060%"</span>?maxEntries=10</pre></div>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

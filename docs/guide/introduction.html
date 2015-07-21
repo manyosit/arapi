@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>1 Introduction 0.14.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/operations.html"><strong>3</strong><span>API Operations</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>arapi</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>1 Introduction - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Robert Hannemann</p>
+
+                    <p><strong>Version:</strong> 0.14.7</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#changes"><strong>1.1</strong><span>Change Log</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="introduction">1 Introduction</h1>
+This application will help you to create, update and query ARSystem or ITSM data in a easy way. No configuration of the application is needed. All necessary values are passed during runtime. It therefore is not optimized for performance but flexibility and simplicity instead.
+It is now feasible to even use Script Languages like Python, PHP, Groovy, Ruby, .... to easily access Remedy Data. This massively decreases development and maintenance costs for integrated BSM Solutions.<p class="paragraph"/>Sample Use Cases:
+<ul class="star">
+<li>Monitoring &#38; Event Management</li>
+<li>Software Deployment</li>
+<li>Technical Configuration Management</li>
+<li>Identity Management</li>
+<li>Technical Automation</li>
+</ul><p class="paragraph"/>Important note: Our community edition is free for use but comes with absolutely no warranty and support. Please contact service@vipcon.com for a version with support and maintenance.
+
+
+<h2 id="changes">1.1 Change Log</h2>
+<h3>Version 0.14</h3>
+<ul class="star">
+<li>Enhancement: Entry Mode added to field list (e.g. Display-only, Required, Optional, System)</li>
+<li>Enhancement: Field Limits added to field list (Warning: Can't be determined for some Core System fields like Create Date. null will be returned in this case, also the qualifier for the fieldlimit of table fields was set to null as it can't be converted to json nor to xml)</li>
+<li>Enhancement: Optional parameter format added. Possible values xml, json. Default value is json</li>
+<li>Enhancement: Optional parameter countOnly added. Possible values true, false. Default value is false. Returns only the number of records for a certain query.</li>
+<li>Enhancement: Query of records changed to getListEntryObjects in order to improve performance</li>
+</ul><p class="paragraph"/><h3>Version 0.13</h3>
+<ul class="star">
+<li>Bugfix: Optional Parameter translateSelectionFields=false did not work anymore.</li>
+<li>Bugfix: Small fix on retrieve form list</li>
+<li>Enhancement: DELETE operation added for completeness.</li>
+<li>Enhancement: Field cache is now server and user specific. Important if AR RESTful API is used by different users with different permissions or on different servers with different permissions for the same user.</li>
+<li>Enhancement: Status History Fields: Finally got the values translated into something meaningful.</li>
+</ul><p class="paragraph"/>The field value will be returned as<p class="paragraph"/><div class="code"><pre><span class="java&#45;quote">"Statusverlauf"</span>:&#123;
+	<span class="java&#45;quote">"Rejected"</span>:<span class="java&#45;keyword">null</span>,
+	<span class="java&#45;quote">"New"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>
+	&#125;,
+	<span class="java&#45;quote">"Closed"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Fri Apr 18 10:35:27 CEST 2014"</span>
+	&#125;,
+	<span class="java&#45;quote">"Resolved"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>
+	&#125;,
+	<span class="java&#45;quote">"Assigned"</span>:<span class="java&#45;keyword">null</span>
+&#125;</pre></div><p class="paragraph"/>or<p class="paragraph"/><div class="code"><pre><span class="java&#45;quote">"Statusverlauf"</span>:&#123;
+	<span class="java&#45;quote">"0"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>
+	&#125;,
+	<span class="java&#45;quote">"1"</span>:<span class="java&#45;keyword">null</span>,
+	<span class="java&#45;quote">"2"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Tue Apr 01 09:00:16 CEST 2014"</span>
+	&#125;,
+	<span class="java&#45;quote">"3"</span>:<span class="java&#45;keyword">null</span>,
+	<span class="java&#45;quote">"4"</span>:&#123;
+		<span class="java&#45;quote">"User"</span>:<span class="java&#45;quote">"rhannemann"</span>,
+		<span class="java&#45;quote">"Date"</span>:<span class="java&#45;quote">"Fri Apr 18 10:35:27 CEST 2014"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>depending of the optional parameter (translateSelectionFields=true / translateSelectionFields=false)<p class="paragraph"/><h3>Version 0.12</h3>
+<ul class="star">
+<li>Chunking added for large queries</li>
+<li>Moved documentation to HTML</li>
+<li>Translation of FieldIDs to FieldNames activated as default</li>
+<li>Translation of Selection Field Values to Character presentation activated as default</li>
+<li>Translation for GET operations for Date/Time, Date and Time fields checked</li>
+<li>Translation for POST / PUT operations added for Date/Time fields. Value needs to be provided in the following format:  <em class="italic">"EEE MMM dd HH:mm:ss zzz yyyy"</em>  with the date locale US.</li>
+<li>Translation added for currency fields for GET/POST/PUT</li>
+<li>Attachments added for GET/POST/PUT</li>
+<li><strong class="bold">Handling of null values changed</strong>: They will now be returned as  <em class="italic">null</em>  instead of  <em class="italic">"null"</em> </li>
+<li><strong class="bold">Handling of numerical(Integer, Decimal, ...) values changed</strong>: They will now be returned as  <em class="italic">1.4</em>  instead of  <em class="italic">"1.4"</em> </li>
+</ul><p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

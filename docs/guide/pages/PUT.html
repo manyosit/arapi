@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.4 Update Data 0.14.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/operations.html"><strong>3</strong><span>API Operations</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>arapi</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.4 Update Data - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Robert Hannemann</p>
+
+                    <p><strong>Version:</strong> 0.14.7</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="PUT">3.4 Update Data</h2>
+Data can be updated via a PUT Request<p class="paragraph"/>Use the URL as follows<p class="paragraph"/>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;<p class="paragraph"/>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/<p class="paragraph"/>The data itself needs to be provided as JSON in the following format<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;requestid&#62;"</span>: &#123;
+		<span class="java&#45;quote">"&#60;fieldid&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>,
+		<span class="java&#45;quote">"&#60;fieldname&#62;"</span>: <span class="java&#45;quote">"&#60;value&#62;"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>The response will be in JSON and will return "success" or an error for each request<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"&#60;requestid&#62;"</span>: <span class="java&#45;quote">"success"</span>
+&#125;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/>Sample Request<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"000000000000028"</span>: &#123;
+		<span class="java&#45;quote">"<span class="java&#45;object">Short</span> Description"</span>: <span class="java&#45;quote">"New Update Record"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Character</span> Field"</span>: <span class="java&#45;quote">"rohase"</span>,
+		<span class="java&#45;quote">"Decimal Field"</span>: 1.97,
+		<span class="java&#45;quote">"Real Field"</span>: 63332.556,
+		<span class="java&#45;quote">"Time Field"</span>: <span class="java&#45;quote">"19:00:00"</span>,
+		<span class="java&#45;quote">"<span class="java&#45;object">Integer</span> Field"</span>: 9,
+		<span class="java&#45;quote">"Diary Field"</span>: <span class="java&#45;quote">"New Entry"</span>,
+		7: <span class="java&#45;quote">"Resolved"</span>,
+		<span class="java&#45;quote">"Date Field"</span>: <span class="java&#45;quote">"01.06.2014"</span>,
+		<span class="java&#45;quote">"Submitter"</span>: <span class="java&#45;quote">"roha"</span>,
+		<span class="java&#45;quote">"Date/time Fiel"</span>: <span class="java&#45;quote">"Sun Jun 02 01:56:02 CEST 2014"</span>,
+		<span class="java&#45;quote">"Currency Field"</span>: &#123;
+			<span class="java&#45;quote">"conversionDate"</span>: <span class="java&#45;quote">"Tue Apr 01 11:10:35 CEST 2014"</span>,
+			<span class="java&#45;quote">"currencyCode"</span>: <span class="java&#45;quote">"USD"</span>,
+			<span class="java&#45;quote">"value"</span>: 5299.82
+		&#125;
+    &#125;, <span class="java&#45;quote">"000000000000028"</span>: &#123;
+		<span class="java&#45;quote">"7"</span>: <span class="java&#45;quote">"New"</span>,
+		<span class="java&#45;quote">"8"</span>: <span class="java&#45;quote">"Moin"</span>
+	&#125;
+&#125;</pre></div><p class="paragraph"/>Sample Response<p class="paragraph"/><div class="code"><pre>&#123;
+	<span class="java&#45;quote">"000000000000028"</span>: <span class="java&#45;quote">"success"</span>,
+	<span class="java&#45;quote">"000000000000031"</span>: <span class="java&#45;quote">"success"</span>
+&#125;</pre></div><p class="paragraph"/><h3>Attachments</h3><p class="paragraph"/>Attachments can be set or update via a multipart/form-data POST request to a specific URL.<p class="paragraph"/>URL Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/setAttachment/&#60;entryID&#62;/&#60;attachmentFieldID&#62;</pre></div>
+<ul class="star">
+<li> <em class="italic">&#60;entryID&#62;</em>  : The ID of entry / record where the attachment needs to be set / updated</li>
+<li> <em class="italic">&#60;attachmentFieldID&#62;</em>  : The Field ID of attachment field that needs to be set / updated</li>
+</ul><p class="paragraph"/>The filename needs to be provided as value for the  <em class="italic">name</em>  attribute.<p class="paragraph"/>Sample URL:<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/setAttachment/000000000000101/536870915</pre></div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/sampleapps.html"><strong>4</strong><span>Sample Applications</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
