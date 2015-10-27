@@ -19,8 +19,8 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
     rm -rf /tomcat/webapps/ROOT/* && \
     rm -rf /tomcat/webapps/docs
 
-ADD arapi-0.14.8.war /tomcat/webapps/
-RUN mv /tomcat/webapps/arapi-0.14.8.war /tomcat/webapps/arapi.war
+ADD arapi-0.14.9.war /tomcat/webapps/
+RUN mv /tomcat/webapps/arapi-0.14.9.war /tomcat/webapps/arapi.war
 ADD docs-0.14.7.tar.gz /tomcat/webapps/
 ADD index.jsp /tomcat/webapps/ROOT/
 ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
