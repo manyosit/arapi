@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.2 Query Data 0.14.7</title>
+    <title>3.2 Query Data 0.14.10</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,7 +74,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Robert Hannemann</p>
 
-                    <p><strong>Version:</strong> 0.14.7</p>
+                    <p><strong>Version:</strong> 0.14.10</p>
 
                     
                 </div>
@@ -87,7 +87,7 @@ function addJsClass() {
 <h3>Optional Parameters / General handling </h3><p class="paragraph"/>The following optional parameters can be used to change the behavior of the GET operation.<p class="paragraph"/><h4>Field IDs</h4><p class="paragraph"/>By default the application returns field names. If required the parameter  <em class="italic">fieldNames=false</em>  can be provided in URL to return field ids instead. 
 e.g. 
 <div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?fieldNames=<span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/>For all  <em class="italic">POST / PUT</em>  operations you can address fields by name or id.<p class="paragraph"/><h4>Selection Fields</h4><p class="paragraph"/>By default the application returns the character presentation for all Selection Fields. E.g. The value  <em class="italic">Deployed</em>  for the field  <em class="italic">AssetLifecylcleStatus</em>  will be returned instead of its internal numerical value  <em class="italic">3</em> . With the optional parameter  <em class="italic">translateSelectionFields=false</em>  this can be changed to return  <em class="italic">3</em>  instead.<p class="paragraph"/>e.g. 
-<div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?translateSelectionFields=<span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/><h4>Chunking</h4><p class="paragraph"/>Chunking allows you to receive a large amount of records in small chunks. e.g. you want to receive all records in chunks with 1000 records each. The first query will set the parameter firstEntry to 0 and the parameter maxEntries to 1000. This will return records 1 - 1000. The second query will set the parameter firstEntry to 1000 and the parameter maxEntries to 1000. This will return the records 1001 - 2000.<p class="paragraph"/>Two optional parameters are available:<p class="paragraph"/>firstEntry: The first entry to return. Defaults to 0
+<div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1'=<span class="java&#45;quote">"INC000000000604"</span>?translateSelectionFields=<span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/><h4>showDisplayOnlyFields</h4><p class="paragraph"/>With this parameter set to true also Display Only fields will be returned in a query. While they will always be empty this functionality might be useful to fire workflow on a Get operation.<p class="paragraph"/>Defaults to false<p class="paragraph"/><h4>Chunking</h4><p class="paragraph"/>Chunking allows you to receive a large amount of records in small chunks. e.g. you want to receive all records in chunks with 1000 records each. The first query will set the parameter firstEntry to 0 and the parameter maxEntries to 1000. This will return records 1 - 1000. The second query will set the parameter firstEntry to 1000 and the parameter maxEntries to 1000. This will return the records 1001 - 2000.<p class="paragraph"/>Two optional parameters are available:<p class="paragraph"/>firstEntry: The first entry to return. Defaults to 0
 maxEntries: The number of entries to return with this chunk. Defaults to 0 (all)<p class="paragraph"/>Samples<p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?firstEntry=1000&#38;maxEntries=1000</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?firstEntry=140</pre></div><p class="paragraph"/><div class="code"><pre>http://localhost:8080/arapi/arserver123.mydomain.de/HPD:Help%20Desk/'1' LIKE <span class="java&#45;quote">"INC00000000060%"</span>?maxEntries=10</pre></div><p class="paragraph"/><h4>Attachment Fields</h4><p class="paragraph"/>If an attachment is stored in the current record it will not be returned with the query operation. Instead a reference to the attachment will be provided. With a get operation on this reference the attachment can be received.<p class="paragraph"/>e.g.<p class="paragraph"/>Sample Query Response:<p class="paragraph"/><div class="code"><pre><span class="java&#45;quote">"Attachment Field"</span>:&#123;
 	<span class="java&#45;quote">"Name"</span>:<span class="java&#45;quote">"20140127_Existing_Records.xlsx"</span>,
 	<span class="java&#45;quote">"URL"</span>:<span class="java&#45;quote">"http://localhost:8080/arapi/muc&#45;vip&#45;srvw084.intern.manyos.de/ARAPI:test/getAttachment/000000000000101/536870915"</span>
@@ -243,6 +243,38 @@ maxEntries: The number of entries to return with this chunk. Defaults to 0 (all)
       <span class="java&#45;quote">"type"</span>:<span class="java&#45;quote">"CharacterField"</span>,
       <span class="java&#45;quote">"valueMapping"</span>:<span class="java&#45;keyword">null</span>
    &#125;
+&#125;</pre></div><p class="paragraph"/><h3>Get Server Status</h3><p class="paragraph"/>Shows some basic server and license information<p class="paragraph"/>Request Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/status</pre></div><p class="paragraph"/>Sample Response:<p class="paragraph"/><div class="code"><pre>&#123;
+  <span class="java&#45;quote">"Date"</span>: <span class="java&#45;quote">"2016&#45;04&#45;27T08:38:59Z"</span>,
+  <span class="java&#45;quote">"ServerInfo"</span>: &#123;
+    <span class="java&#45;quote">"Name"</span>: <span class="java&#45;quote">"192.168.0.39"</span>,
+    <span class="java&#45;quote">"Port"</span>: 32771,
+    <span class="java&#45;quote">"Version"</span>: <span class="java&#45;quote">"9.1.00 201512160229"</span>,
+    <span class="java&#45;quote">"CharSet"</span>: <span class="java&#45;quote">"UTF&#45;8"</span>,
+    <span class="java&#45;quote">"HostID"</span>: <span class="java&#45;keyword">null</span>
+  &#125;,
+  <span class="java&#45;quote">"CurrentLicenses"</span>: &#123;
+    <span class="java&#45;quote">"AR Server"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 2
+    &#125;,
+    <span class="java&#45;quote">"BMC:Asset Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;,
+    <span class="java&#45;quote">"BMC:Financial Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;,
+    <span class="java&#45;quote">"BMC:Incident Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;,
+    <span class="java&#45;quote">"BMC:Change Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;,
+    <span class="java&#45;quote">"BMC:Problem Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;,
+    <span class="java&#45;quote">"BMC:Service Level Mgmt"</span>: &#123;
+      <span class="java&#45;quote">"fixed"</span>: 1
+    &#125;
+  &#125;
 &#125;</pre></div><p class="paragraph"/><h3>Query Data</h3><p class="paragraph"/>To access data you need to provide a URL in the following format:<p class="paragraph"/>Request Format:<p class="paragraph"/><div class="code"><pre>http://&#60;tomcat&#62;/arapi/&#60;arserver&#62;/&#60;schema&#62;/&#60;query&#62;</pre></div><p class="paragraph"/>e.g.<p class="paragraph"/><div class="code"><pre>http://tomcat/arapi/arserver/ARAPI:test/'1' LIKE <span class="java&#45;quote">"00000000000010%"</span></pre></div><p class="paragraph"/>Sample Response:<p class="paragraph"/><div class="code"><pre>&#123;
 	<span class="java&#45;quote">"000000000000101"</span>:&#123;
 		<span class="java&#45;quote">"Attachment Field"</span>:&#123;
